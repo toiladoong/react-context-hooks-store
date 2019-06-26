@@ -49,3 +49,13 @@ const rootReducer = combineReducers({
 
 export { Provider, connect, rootReducer, useStore, useDispatch, combineReducers }
 ```
+
+```js
+// src/index.js
+import { Provider, rootReducer } from './store.js';
+
+const initialValue = {}
+
+<Provider rootReducer={rootReducer} initialValue={initialValue}>
+  <App />
+</Provider>
