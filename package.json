@@ -1,15 +1,19 @@
 {
-  "name": "react-context-store",
+  "name": "react-context-hooks-store",
   "version": "0.0.1",
   "description": "A simple global store based on React Context and Hooks",
-  "private": true,
-  "engines": {
-    "node": ">=7.0",
-    "npm": ">=4.0"
+  "keywords": [
+    "react",
+    "react-context",
+    "react-hooks"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toiladoong/react-context-hooks-store.git"
   },
+  "homepage": "https://github.com/toiladoong/react-context-hooks-store",
   "dependencies": {
     "react": "16.8.6"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
