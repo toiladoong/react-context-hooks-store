@@ -59,3 +59,21 @@ const initialValue = {}
 <Provider rootReducer={rootReducer} initialValue={initialValue}>
   <App />
 </Provider>
+```
+
+```js
+// src/pages/movie.js
+import { connect } from './store.js';
+
+const Movie = ({ theme }) => {
+  return (
+    <div>{theme}</div>
+  )
+}
+
+const mapState = ({ common: { theme } }) => ({
+  theme
+});
+
+export default connect(mapState)(Movie)
+```
