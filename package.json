@@ -1,0 +1,15 @@
+{
+  "name": "react-context-store",
+  "version": "0.0.1",
+  "description": "A simple global store based on React Context and Hooks",
+  "private": true,
+  "engines": {
+    "node": ">=7.0",
+    "npm": ">=4.0"
+  },
+  "dependencies": {
+    "react": "16.8.6"
+  },
+  "devDependencies": {
+  }
+}
