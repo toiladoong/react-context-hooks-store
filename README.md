@@ -5,7 +5,7 @@ A simple global store based on React Context and Hooks
 ##  Installation
 
 ```bash
-npm install react-context-store
+npm install react-context-hooks-store
 ```
 
 ## Use It
