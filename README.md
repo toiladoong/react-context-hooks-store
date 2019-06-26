@@ -1,5 +1,4 @@
 # react-context-hooks-store
-
 A simple global store based on React Context and Hooks
 
 ##  Installation
