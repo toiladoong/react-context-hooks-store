@@ -1,4 +1,5 @@
 # react-context-hooks-store
+
 A simple global store based on React Context and Hooks
 
 ##  Installation
@@ -13,7 +14,6 @@ yarn add react-context-hooks-store
 
 ```js
 // reducers/common.js
-
 let initialState = {
   theme: 'white'
 };
