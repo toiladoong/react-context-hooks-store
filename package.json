@@ -17,13 +17,13 @@
   },
   "homepage": "https://github.com/toiladoong/react-context-hooks-store",
   "dependencies": {
-    "@babel/core": "^7.4.5",
-    "react": "16.8.6",
-    "rollup": "^1.16.2",
-    "rollup-plugin-babel": "^4.3.3"
+    "react": "16.8.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0"
+    "@babel/preset-react": "^7.0.0",
+    "rollup": "^1.16.2",
+    "rollup-plugin-babel": "^4.3.3"
   }
 }
