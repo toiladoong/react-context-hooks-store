@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, useRef } from 'react';
-import { useIsomorphicLayoutEffect } from './utils';
+import { useIsomorphicLayoutEffect } from './utils/index';
 import Context from './Context';
 
 const Provider = (props) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { subscribe, unsubscribe } from '../helpers';
+import { subscribe, unsubscribe } from '../helpers/index';
 import shallowEqual from '../shallowEqual';
 
 let oldState;
