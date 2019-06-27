@@ -6,13 +6,14 @@ A simple global store based on React Context and Hooks
 
 ```bash
 npm install react-context-hooks-store
+or
+yarn add react-context-hooks-store
 ```
 
 ## Use It
 
 ```js
 // reducers/common.js
-
 let initialState = {
   theme: 'white'
 };
@@ -37,7 +38,7 @@ export default reducer
 
 ```js
 // store.js
-import { Provider, connect, useStore, useDispatch, combineReducers } from 'react-context-store';
+import { Provider, connect, useStore, useDispatch, combineReducers } from 'react-context-hooks-store';
 
 import common from './reducers/common';
 import global from './reducers/global';
