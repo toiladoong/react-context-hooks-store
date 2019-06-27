@@ -21,29 +21,7 @@ export default {
           }
         ],
         "@babel/react"
-      ],
-      "plugins": [
-        [
-          "@babel/proposal-decorators",
-          {
-            "legacy": true
-          }
-        ],
-        "@babel/proposal-class-properties",
-        "@babel/syntax-dynamic-import"
-      ],
-      "env": {
-        "production": {
-          "plugins": [
-            [
-              "transform-react-remove-prop-types",
-              {
-                "removeImport": true
-              }
-            ]
-          ]
-        }
-      }
+      ]
     })
   ]
 }
