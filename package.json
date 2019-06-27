@@ -1,7 +1,8 @@
 {
   "name": "react-context-hooks-store",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple global store based on React Context and Hooks",
+  "main": "src/index.js",
   "keywords": [
     "react",
     "react-context",
