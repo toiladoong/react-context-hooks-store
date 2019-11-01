@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef } from 'react';
 
 import Context from '../Context';
 
-import { useForceUpdate, useIsomorphicLayoutEffect } from '../utils/index';
+import { useForceUpdate, useIsomorphicLayoutEffect } from '../utils';
 
 const isFunction = f => typeof f === 'function';
 const defaultEqualityFn = (a, b) => a === b;

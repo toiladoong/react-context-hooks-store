@@ -64,7 +64,7 @@ const initialValue = {}
 
 ```js
 // src/pages/movie.js
-import { connect } from './store.js';
+import { connect, memoize } from './store.js';
 
 const Movie = ({ theme }) => {
   return (
@@ -76,5 +76,14 @@ const mapState = ({ common: { theme } }) => ({
   theme
 });
 
-export default connect(mapState)(Movie)
+// options
+const memoPropsAreEqual = (prevProps, nextProps) => {
+  if (nextProps.visible !== prevProps.visible) {
+    return false
+  }
+
+  return true
+};
+
+export default connect(mapState)(memoize(Movie, memoPropsAreEqual))
 ```
