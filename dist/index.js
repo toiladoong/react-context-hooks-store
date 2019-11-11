@@ -6,6 +6,20 @@
 
   var React__default = 'default' in React ? React['default'] : React;
 
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
   function _extends() {
     _extends = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
@@ -22,6 +36,42 @@
     };
 
     return _extends.apply(this, arguments);
+  }
+
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      target[key] = source[key];
+    }
+
+    return target;
+  }
+
+  function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+
+    var key, i;
+
+    if (Object.getOwnPropertySymbols) {
+      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+      for (i = 0; i < sourceSymbolKeys.length; i++) {
+        key = sourceSymbolKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+        target[key] = source[key];
+      }
+    }
+
+    return target;
   }
 
   function _slicedToArray(arr, i) {
@@ -64,6 +114,26 @@
 
   var useIsomorphicLayoutEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
+  //   get state() {
+  //     throw new Error('Please use <Provider rootReducer={...} initialState={...}>');
+  //   },
+  //   get dispatch() {
+  //     throw new Error('Please use <Provider rootReducer={...} initialState={...}>');
+  //   },
+  //   get subscribe() {
+  //     throw new Error('Please use <Provider rootReducer={...} initialState={...}>');
+  //   }
+  // };
+  //
+  // const calculateChangedBits = (a, b) => (
+  //   a.dispatch !== b.dispatch || a.subscribe !== b.subscribe ? 1 : 0
+  // );
+  //
+  // const createCustomContext = (
+  //   w = warningObject,
+  //   c = calculateChangedBits,
+  // ) => createContext(w, c);
+
   var Context = React.createContext();
 
   var Provider = function Provider(props) {
@@ -105,6 +175,54 @@
     }, props));
   };
 
+  function useDispatch() {
+    var _useContext = React.useContext(Context),
+        dispatch = _useContext.dispatch;
+
+    return dispatch;
+  }
+
+  // import { createDeepProxy, isDeepChanged } from './helpers/deepProxy';
+  // const deepState = (opts = {}) => {
+  //   const forceUpdate = useForceUpdate();
+  //   const { state, subscribe } = useContext(Context);
+  //   const affected = new WeakMap();
+  //   const lastRef = useRef(null);
+  //
+  //   useIsomorphicLayoutEffect(() => {
+  //     lastRef.current = {
+  //       state,
+  //       affected,
+  //       cache: new WeakMap(),
+  //       assumeChangedIfNotAffected: opts.unstable_forceUpdateForStateChange ? true : opts.unstable_ignoreIntermediateObjectUsage ? false : null,
+  //     };
+  //   });
+  //
+  //   useEffect(() => {
+  //     const callback = (nextState) => {
+  //       const changed = isDeepChanged(
+  //         lastRef.current.state,
+  //         nextState,
+  //         lastRef.current.affected,
+  //         lastRef.current.cache,
+  //         lastRef.current.assumeChangedIfNotAffected,
+  //       );
+  //       if (changed) {
+  //         lastRef.current.state = nextState;
+  //         forceUpdate();
+  //       }
+  //     };
+  //
+  //     forceUpdate();
+  //
+  //     return subscribe(callback);
+  //   }, [subscribe, forceUpdate]);
+  //
+  //   const proxyCache = useRef(new WeakMap());
+  //
+  //   return createDeepProxy(state, affected, proxyCache.current);
+  // };
+
   var connect = function connect(mapStateToProps, mapDispatchToProps) {
     return function (Component) {
       return function (props) {
@@ -139,6 +257,140 @@
     };
   };
 
+  var isArray = Array.isArray;
+  var keyList = Object.keys;
+  var hasProp = Object.prototype.hasOwnProperty;
+  var hasElementType = typeof Element !== 'undefined';
+
+  function equal(a, b) {
+    if (a === b) {
+      return true;
+    }
+
+    if (a && b && _typeof(a) == 'object' && _typeof(b) == 'object') {
+      var arrA = isArray(a);
+      var arrB = isArray(b);
+      var length;
+      var key;
+
+      if (arrA && arrB) {
+        length = a.length;
+
+        if (length !== b.length) {
+          return false;
+        }
+
+        for (var i = 0; i < length; i++) {
+          if (!equal(a[i], b[i])) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      if (arrA !== arrB) {
+        return false;
+      }
+
+      var dateA = a instanceof Date;
+      var dateB = b instanceof Date;
+
+      if (dateA !== dateB) {
+        return false;
+      }
+
+      if (dateA && dateB) {
+        return a.getTime() === b.getTime();
+      }
+
+      var regexpA = a instanceof RegExp;
+      var regexpB = b instanceof RegExp;
+
+      if (regexpA !== regexpB) {
+        return false;
+      }
+
+      if (regexpA && regexpB) {
+        return a.toString() === b.toString();
+      }
+
+      var keys = keyList(a);
+      length = keys.length;
+      if (length !== keyList(b).length) return false;
+
+      for (var _i = 0; _i < length; _i++) {
+        if (!hasProp.call(b, keys[_i])) {
+          return false;
+        }
+      }
+
+      if (hasElementType && a instanceof Element) {
+        return false;
+      }
+
+      for (var _i2 = 0; _i2 < length; _i2++) {
+        key = keys[_i2];
+
+        if (key === '_owner' && a.$$typeof) {
+          continue;
+        } else {
+          if (!equal(a[key], b[key])) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    return a !== a && b !== b;
+  }
+
+  function exportedEqual(a, b) {
+    try {
+      return equal(a, b);
+    } catch (error) {
+      if (error.message && error.message.match(/stack|recursion/i) || error.number === -2146828260) {
+        console.warn('Warning: isEqual does not handle circular references.', error.name, error.message);
+        return false;
+      }
+
+      throw error;
+    }
+  }
+
+  var shallowDiffers = function shallowDiffers(prev, next) {
+    for (var attribute in prev) {
+      if (!(attribute in next)) {
+        return true;
+      }
+    }
+
+    for (var _attribute in next) {
+      if (!exportedEqual(prev[_attribute], next[_attribute])) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  var areEqual = function areEqual(prevProps, nextProps) {
+    var prevStyle = prevProps.style,
+        prevRest = _objectWithoutProperties(prevProps, ["style"]);
+
+    var nextStyle = nextProps.style,
+        nextRest = _objectWithoutProperties(nextProps, ["style"]);
+
+    return !shallowDiffers(prevStyle, nextStyle) && !shallowDiffers(prevRest, nextRest);
+  };
+
+  var memoize = function memoize(Component) {
+    var memoPropsAreEqual = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : areEqual;
+    return React.memo(Component, memoPropsAreEqual);
+  };
+
   function unsubscribe(fn) {
   }
 
@@ -156,12 +408,120 @@
     return state;
   }
 
-  function useDispatch() {
-    var _useContext = React.useContext(Context),
-        dispatch = _useContext.dispatch;
+  var equal$1 = function equal(a, b) {
+    var ctor;
+    var len;
 
-    return dispatch;
+    if (a === b) {
+      return true;
+    }
+
+    if (a && b && (ctor = a.constructor) === b.constructor) {
+      if (ctor === Date) {
+        return a.getTime() === b.getTime();
+      }
+
+      if (ctor === RegExp) {
+        return a.toString() === b.toString();
+      }
+
+      if (ctor === Array && (len = a.length) === b.length) {
+        while (len-- && equal(a[len], b[len])) {
+        }
+
+        return len === -1;
+      }
+
+      if (ctor === Object) {
+        if (Object.keys(a).length !== Object.keys(b).length) {
+          return false;
+        }
+
+        for (len in a) {
+          if (!(len in b) || !equal(a[len], b[len])) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+    }
+
+    return a !== a && b !== b;
+  };
+
+  function deepEqual(a, b) {
+    try {
+      return equal$1(a, b);
+    } catch (error) {
+      if (error.message && error.message.match(/stack|recursion/i) || error.number === -2146828260) {
+        console.warn('Warning: deepEqual does not handle circular references.', error.name, error.message);
+        return false;
+      }
+
+      throw error;
+    }
   }
+
+  var useDeepMemoize = function useDeepMemoize(value) {
+    var ref = React.useRef([]);
+
+    if (!deepEqual(value, ref.current)) {
+      ref.current = value;
+    }
+
+    return ref.current;
+  };
+
+  var isPrimitive = function isPrimitive(val) {
+    return val == null || /^[sbn]/.test(_typeof(val));
+  };
+
+  var checkDeps = function checkDeps(deps, name) {
+    var hookName = "React.".concat(name.replace(/Deep/, ''));
+
+    if (!deps || deps.length === 0) {
+      console.warn("".concat(name, " should not be used with no dependencies. Use ").concat(hookName, " instead."));
+    }
+
+    if (deps.every(isPrimitive)) {
+      console.warn("".concat(name, " should not be used with dependencies that are all primitive values. Use ").concat(hookName, " instead."));
+    }
+  };
+
+  var useDeepEffect = function useDeepEffect(effect, dependencies) {
+    if (process.env.NODE_ENV !== 'production') {
+      checkDeps(dependencies, 'useDeepEffect');
+    }
+
+    return React__default.useEffect(effect, useDeepMemoize(dependencies));
+  };
+
+  var useIsomorphicLayoutEffect$1 = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+
+  var useDeepIsomorphicLayoutEffect = function useDeepIsomorphicLayoutEffect(effect, dependencies) {
+    if (process.env.NODE_ENV !== 'production') {
+      checkDeps(dependencies, 'useDeepEffect');
+    }
+
+    return useIsomorphicLayoutEffect$1(effect, useDeepMemoize(dependencies));
+  };
+
+  var useDeepCallback = function useDeepCallback(callback, dependencies) {
+    if (process.env.NODE_ENV !== 'production') {
+      checkDeps(dependencies, 'useDeepCallback');
+    }
+
+    return React__default.useCallback(callback, useDeepMemoize(dependencies));
+  };
+
+  var useDeepMemo = function useDeepMemo(factory, dependencies) {
+    if (process.env.NODE_ENV !== 'production') {
+      checkDeps(dependencies, 'useDeepMemo');
+    }
+
+    return React__default.useMemo(factory, useDeepMemoize(dependencies));
+  };
 
   function combineReducers(reducers) {
     return function (state, action) {
@@ -178,6 +538,11 @@
   exports.Provider = Provider;
   exports.combineReducers = combineReducers;
   exports.connect = connect;
+  exports.memoize = memoize;
+  exports.useDeepCallback = useDeepCallback;
+  exports.useDeepEffect = useDeepEffect;
+  exports.useDeepIsomorphicLayoutEffect = useDeepIsomorphicLayoutEffect;
+  exports.useDeepMemo = useDeepMemo;
   exports.useDispatch = useDispatch;
   exports.useStore = useStore;
 

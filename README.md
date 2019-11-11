@@ -38,7 +38,7 @@ export default reducer
 
 ```js
 // store.js
-import { Provider, connect, useStore, useDispatch, combineReducers } from 'react-context-hooks-store';
+import { Provider, connect, memoize, useStore, useDispatch, useDeepEffect, combineReducers } from 'react-context-hooks-store';
 
 import common from './reducers/common';
 import global from './reducers/global';
@@ -48,7 +48,7 @@ const rootReducer = combineReducers({
   common
 });
 
-export { Provider, connect, rootReducer, useStore, useDispatch, combineReducers }
+export { Provider, connect, memoize, rootReducer, useStore, useDispatch, useDeepEffect, combineReducers }
 ```
 
 ```js
@@ -64,9 +64,12 @@ const initialValue = {}
 
 ```js
 // src/pages/movie.js
-import { connect, memoize } from './store.js';
+import { connect, memoize, useDeepEffect } from './store.js';
 
 const Movie = ({ theme }) => {
+  useDeepEffect(() => {
+  }, [array, object]);
+  
   return (
     <div>{theme}</div>
   )
