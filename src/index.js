@@ -10,6 +10,13 @@ import useDeepIsomorphicLayoutEffect from './hooks/useDeepIsomorphicLayoutEffect
 import useDeepCallback from './hooks/useDeepCallback';
 import useDeepMemo from './hooks/useDeepMemo';
 import combineReducers from './combineReducers';
+import createStore from './createStore';
+import isEqual from './utils/isEqual';
+import deepEqual from './utils/deepEqual';
+
+const init = (config) => {
+  return createStore(config)
+};
 
 export {
   Provider,
@@ -21,5 +28,8 @@ export {
   useDeepIsomorphicLayoutEffect,
   useDeepCallback,
   useDeepMemo,
-  combineReducers
+  combineReducers,
+  isEqual,
+  deepEqual,
+  init
 };

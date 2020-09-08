@@ -1,6 +1,6 @@
 {
   "name": "react-context-hooks-store",
-  "version": "0.1.5",
+  "version": "0.1.18",
   "description": "A simple global store based on React Context and Hooks",
   "main": "./dist/index.js",
   "scripts": {
@@ -17,10 +17,15 @@
   },
   "homepage": "https://github.com/toiladoong/react-context-hooks-store",
   "dependencies": {
-    "react": "^16.11.0"
+    "@rollup/plugin-strip": "^1.3.1",
+    "react": "^16.11.0",
+    "react-cookie": "^4.0.3",
+    "rollup-plugin-local-resolve": "^1.0.7",
+    "rollup-plugin-uglify": "^6.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "rollup": "^1.16.2",

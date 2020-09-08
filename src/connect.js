@@ -48,7 +48,7 @@ import useDispatch from './hooks/useDispatch';
 
 const connect = (mapStateToProps, mapDispatchToProps) => Component => {
   return props => {
-    const { state, dispatch } = useContext(Context);
+    const { state, dispatch, actions, effects } = useContext(Context);
 
     let filteredState = {};
     let filteredDispatch = {};
@@ -60,14 +60,24 @@ const connect = (mapStateToProps, mapDispatchToProps) => Component => {
     }
 
     if (mapDispatchToProps) {
-      filteredDispatch = mapDispatchToProps(dispatch)
+      filteredDispatch = mapDispatchToProps({
+        ...actions,
+        ...effects
+      }, dispatch)
     }
 
     const [memoState, memoDispatch] = useMemo(() => {
       return [filteredState, filteredDispatch]
     }, [filteredState, filteredDispatch]);
 
-    return <Component {...props} {...memoState} {...memoDispatch} dispatch={dispatch}/>
+    return (
+      <Component
+        {...props}
+        {...memoState}
+        {...memoDispatch}
+        dispatch={dispatch}
+      />
+    )
   }
 };
 

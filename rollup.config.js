@@ -1,27 +1,39 @@
 import babel from 'rollup-plugin-babel';
+import localResolve from 'rollup-plugin-local-resolve';
+import { uglify } from 'rollup-plugin-uglify';
+import strip from '@rollup/plugin-strip';
 
 export default {
   input: './src/index.js',
   output: {
     file: './dist/index.js',
     format: 'umd',
-    name: 'index'
+    name: 'index',
+    globals: {
+      react: 'React',
+    }
   },
-  globals: {
-    react: 'React',
-  },
-  external: ['react'],
+  external: [
+    'react'
+  ],
   plugins: [
     babel({
-      "presets": [
+      exclude: 'node_modules/**',
+      presets: [
         [
-          "@babel/env",
+          '@babel/env',
           {
-            "modules": false
+            modules: false
           }
         ],
-        "@babel/react"
+        '@babel/react'
+      ],
+      plugins: [
+        '@babel/proposal-class-properties'
       ]
-    })
+    }),
+    localResolve(),
+    uglify(),
+    strip()
   ]
 }
